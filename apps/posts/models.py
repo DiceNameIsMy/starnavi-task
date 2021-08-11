@@ -33,6 +33,9 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_ad = models.DateTimeField(auto_now=True)
 
+    def count_likes(self):
+        return len(self.likes.all())
+
 
 class Like(models.Model):
     author = models.ForeignKey(
