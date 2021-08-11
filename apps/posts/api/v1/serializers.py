@@ -7,7 +7,6 @@ from ...models import Post, Like
 class PostSerializer(ModelSerializer):
 
     def validate(self, attrs):
-        print(attrs)
         if not any([attrs.get('image'), attrs.get('text')]):
             raise ValidationError("test")
         return attrs

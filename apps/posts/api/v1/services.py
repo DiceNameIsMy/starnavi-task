@@ -16,8 +16,6 @@ def get_likes_stats(post: Post, start_date: date, end_date: date):
         date__date__lte=end_date
     )
 
-    print(Like.objects.first().date <= end_date)
-
     for like in sliced_likes:
         date = str(like.date.date())
         if date in results:
