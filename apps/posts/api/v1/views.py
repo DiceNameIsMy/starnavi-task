@@ -3,10 +3,25 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED ,HTTP_204_NO_CONTENT
+from rest_framework.filters import OrderingFilter
 
 from django.shortcuts import get_object_or_404
 
+from .serializers import PostSerializer
 from ...models import Post
+from ...filters import DateFilter
+
+
+class ListCreatePostView(ListCreateAPIView):
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+
+    filter_backends = [OrderingFilter, DateFilter]
+    ordering = ['created_at', 'updated_at' ]
+    date_fields = ['created_at', 'updated_at']
+
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
 
 
 class LikePostView(APIView):
