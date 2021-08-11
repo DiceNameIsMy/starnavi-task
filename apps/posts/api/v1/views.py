@@ -1,4 +1,4 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
@@ -6,8 +6,11 @@ from rest_framework.status import HTTP_201_CREATED ,HTTP_204_NO_CONTENT
 from rest_framework.filters import OrderingFilter
 
 from django.shortcuts import get_object_or_404
+from django.core.exceptions import ValidationError
+from django.utils.timezone import datetime, make_aware
 
 from .serializers import PostSerializer
+from .services import get_likes_stats
 from ...models import Post
 from ...filters import DateFilter
 
@@ -28,6 +31,26 @@ class RetrieveUpdateDestroyPostView(RetrieveUpdateDestroyAPIView):
 
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+
+class PostStatsView(GenericAPIView):
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, request, pk):
+        start_date = request.GET.get('start_date')
+        end_date = request.GET.get('end_date', str(datetime.today().date()))
+
+        if not start_date:
+            raise ValidationError("start_date should be provided")
+
+        start_date_date = make_aware(datetime.strptime(start_date, "%Y-%m-%d"))
+        end_date_date = make_aware(datetime.strptime(end_date, "%Y-%m-%d"))
+
+        post: Post = get_object_or_404(Post, pk=pk)
+
+        stats = get_likes_stats(post, start_date_date, end_date_date)
+
+        return Response(stats)
 
 
 class LikePostView(APIView):
