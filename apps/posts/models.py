@@ -31,7 +31,7 @@ class Post(models.Model):
         through='Like'
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_ad = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def count_likes(self):
         return len(self.likes.all())
