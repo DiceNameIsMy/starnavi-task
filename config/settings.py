@@ -111,5 +111,8 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'apps.accounts.api.v1.serializers.UserDetailsSerializer',
+}
 
 REST_USE_JWT = True
