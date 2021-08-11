@@ -93,6 +93,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/Almaty'
