@@ -11,6 +11,7 @@ from django.utils.timezone import datetime, make_aware
 
 from .serializers import PostSerializer
 from .services import get_likes_stats
+from ...permissons import IsAuthor
 from ...models import Post
 from ...filters import DateFilter
 
@@ -34,7 +35,9 @@ class RetrieveUpdateDestroyPostView(RetrieveUpdateDestroyAPIView):
 
 
 class PostStatsView(GenericAPIView):
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, IsAuthor)
+
+    queryset = Post.objects.all()
 
     def get(self, request, pk):
         start_date = request.GET.get('start_date')
@@ -43,10 +46,11 @@ class PostStatsView(GenericAPIView):
         if not start_date:
             raise ValidationError("start_date should be provided")
 
+        # TODO better naming
         start_date_date = make_aware(datetime.strptime(start_date, "%Y-%m-%d"))
         end_date_date = make_aware(datetime.strptime(end_date, "%Y-%m-%d"))
 
-        post: Post = get_object_or_404(Post, pk=pk)
+        post: Post = self.get_object()
 
         stats = get_likes_stats(post, start_date_date, end_date_date)
 
