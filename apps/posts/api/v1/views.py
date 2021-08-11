@@ -23,6 +23,12 @@ class ListCreatePostView(ListCreateAPIView):
     serializer_class = PostSerializer
 
 
+class RetrieveUpdateDestroyPostView(RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
 
 class LikePostView(APIView):
     permission_classes = (IsAuthenticated, )
