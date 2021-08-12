@@ -22,7 +22,7 @@ Code: 200 -> OK
 
 Code: 400 -> wrong credentialds
 
-### Register `accounts/register`
+### Register `accounts/register/`
 #### POST: 
 + username: str Required
 + email: str
@@ -38,7 +38,7 @@ Code: 201 -> created
 
 Code: 400 -> wrong request data
 
-### User Info: `accounts/user` 
+### User Info: `accounts/user/` 
 returns info about authorized user
 #### GET: 
 
