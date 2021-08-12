@@ -1,13 +1,9 @@
-from datetime import date
-
-from django.core.exceptions import ValidationError
-
-from ...models import Post, Like
+from django.db.models import QuerySet
 
 
-def get_likes_stats(post_likes) -> dict:
+def get_likes_stats(post_likes: QuerySet) -> dict:
     results = {}
-
+    
     for like in post_likes:
         date = str(like.date.date())
         if date in results:
