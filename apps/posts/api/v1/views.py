@@ -9,17 +9,20 @@ from django.shortcuts import get_object_or_404
 from django.core.exceptions import ValidationError
 from django.utils.timezone import datetime, make_aware
 
+from django_filters.rest_framework import DjangoFilterBackend
+
 from .serializers import PostSerializer
 from .services import get_likes_stats
 from ...permissons import IsAuthor
-from ...models import Post
+from ...models import Post, Like
 from ...filters import DateFilter
 
 
 class ListCreatePostView(ListCreateAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly, )
 
-    filter_backends = [OrderingFilter, DateFilter]
+    filter_backends = [DjangoFilterBackend, OrderingFilter, DateFilter]
+    filterset_fields = ['author']
     ordering = ['created_at', 'updated_at' ]
     date_fields = ['created_at', 'updated_at']
 
