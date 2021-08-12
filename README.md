@@ -36,7 +36,7 @@ Code: 400 -> wrong credentialds
 
 #### Response:
 
-Code: 201 -> created
+Code: 201 -> Created
 
     access_token: str
     refresh_token: str
@@ -120,6 +120,8 @@ Code: 200 -> OK
     img: image
 
 #### Response:
+Code: 200 -> OK
+
     author: int,
     text: str,
     image: url | null,
@@ -127,11 +129,79 @@ Code: 200 -> OK
     created_at: datetime,
     updated_at: datetime
 
+-----
 
-# TODO other endpoints
-`posts/<int:pk>/`
-`posts/<int:pk>/like/`
-`posts/<int:pk>/stats/`
+### Post Detail `posts/<int:pk>/`
+#### GET:
+#### Response:
+Code: 200 -> OK
+
+    author: int,
+    image: url | null,
+    text: str,
+    count_likes: int,
+    created_at: datetime,
+    updated_at: datetime
+
+#### PUT \ PATCH:
+#### Data:
+    author: int,
+    text: str,
+    img: image
+
+#### Response:
+Code: 200 -> OK
+
+    author: int,
+    image: url | null,
+    text: str,
+    count_likes: int,
+    created_at: datetime,
+    updated_at: datetime
+
+Code: 400 -> Bad Request
+
+#### DELETE:
+#### Response:
+Code: 204 -> No Content
+
+-----
+
+### Like/Dislike Post `posts/<int:pk>/like/`
+#### POST:
+#### Response:
+Code: 201 -> Created
+
+#### DELETE:
+#### Response:
+Code: 204 -> No Content
+
+-----
+
+### Post Stats `posts/<int:pk>/stats/`
+#### GET:
+#### Filter Params:
+    date_start: date Required
+    date_end: date
+
+#### Response:
+Code: 200 -> OK
+
+    <date>: int,
+    <date>: int,
+    ...
+  
+
+Code: 401 -> Not Unauthorized
+
+Code: 403 -> Forbidden
+
+Code: 404 -> Not Found
+
+
+
+
+
 
 
 
