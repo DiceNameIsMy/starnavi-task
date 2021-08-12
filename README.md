@@ -1,16 +1,19 @@
 # StarNavi task
 Task for Junior developer
 
+Type examples:
++ date -> '2021-08-01' - year-month-day
+
 # API Docs
 `/api/v1/`
 
 ## Auth
-### Login
-#### POST: `accounts/login/`
+### Login `accounts/login/`
+#### POST: 
  + username: str
  + paswword: str
  
-#### Response: 
+##### Response: 
 
 Code: 200 -> OK
 + access_token: str
@@ -19,14 +22,14 @@ Code: 200 -> OK
 
 Code: 400 -> wrong credentialds
 
-### Register
-#### POST: `accounts/register`
+### Register `accounts/register`
+#### POST: 
 + username: str Required
 + email: str
 + password1: str Required
 + password2: str Required
 
-#### Response:
+##### Response:
 
 Code: 201 -> created
 + access_token: str
@@ -35,10 +38,11 @@ Code: 201 -> created
 
 Code: 400 -> wrong request data
 
-### User Info: returns info about authorized user
-#### GET: `accounts/user` 
+### User Info: `accounts/user` 
+returns info about authorized user
+#### GET: 
 
-#### Response:
+##### Response:
 
 Code: 200 -> OK
 + pk: int
@@ -51,10 +55,10 @@ Code: 200 -> OK
 
 Code: 401 -> Unauthorized
 
-### Other User Info:
-#### GET: `accounts/<int:pk>/` (pk -> user_id)
+### Other User Info: `accounts/<int:pk>/` (pk -> user_id)
+#### GET: 
 
-#### Response:
+##### Response:
 
 Code: 200 -> OK
 + pk: int
@@ -65,6 +69,52 @@ Code: 200 -> OK
 + last_active: datetime
 
 Code: 404 -> Not Found
+
+## Posts
+### All posts `posts/`
+#### GET:
+##### Filter Params:
++ author: int
++ created_at_start: date
++ created_at_end: date
++ updated_at_start: date
++ updated_at_end: date
++ ordering: str
+
+##### Response:
+
+Code: 200 -> OK
++ count: int,
++ next: url.
++ previous: url,
++ results: 
+  + author: int,
+  + image: url | null,
+  + text: str,
+  + count_likes: int,
+  + created_at: datetime,
+  + updated_at: datetime
+
+#### POST:
+##### Data:
++ author: int,
++ text: str,
++ img: image
+
+##### Response:
++ author: int,
++ text: str,
++ image: url | null,
++ count_likes: int,
++ created_at: datetime,
++ updated_at: datetime
+
+
+# TODO other endpoints
+`posts/<int:pk>/`
+`posts/<int:pk>/like/`
+`posts/<int:pk>/stats/`
+
 
 
 
