@@ -54,8 +54,9 @@ class PostStatsView(GenericAPIView):
         end_date_date = make_aware(datetime.strptime(end_date, "%Y-%m-%d"))
 
         post: Post = self.get_object()
+        post_likes = Like.objects.filter(post=post)
 
-        stats = get_likes_stats(post, start_date_date, end_date_date)
+        stats = get_likes_stats(post_likes, start_date_date, end_date_date)
 
         return Response(stats)
 

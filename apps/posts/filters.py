@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from rest_framework.filters import BaseFilterBackend
-from django.shortcuts import get_list_or_404
 
 
 class DateFilter(BaseFilterBackend):

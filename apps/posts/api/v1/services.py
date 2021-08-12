@@ -5,13 +5,12 @@ from django.core.exceptions import ValidationError
 from ...models import Post, Like
 
 
-def get_likes_stats(post: Post, start_date: date, end_date: date):
+def get_likes_stats(post_likes, start_date: date, end_date: date) -> dict:
     if start_date > end_date:
-        raise ValidationError("start_date shouldn't be bigger than end_date")
+        raise ValidationError("start_date shouldn't be bigger than the end_date")
     results = {}
 
-    likes = Like.objects.filter(post=post)
-    sliced_likes = likes.filter(
+    sliced_likes = post_likes.filter(
         date__date__gte=start_date, 
         date__date__lte=end_date
     )
