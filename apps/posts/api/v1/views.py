@@ -11,6 +11,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import PostSerializer
 from .services import get_likes_stats
+from .paginators import DefaultPagePaginator
 from ...permissons import IsAuthor
 from ...models import Post, Like
 from ...filters import DateFilter
@@ -18,6 +19,8 @@ from ...filters import DateFilter
 
 class ListCreatePostView(ListCreateAPIView):
     permission_classes = (IsAuthenticatedOrReadOnly, )
+
+    pagination_class = DefaultPagePaginator
 
     filter_backends = [DjangoFilterBackend, OrderingFilter, DateFilter]
     filterset_fields = ['author']
