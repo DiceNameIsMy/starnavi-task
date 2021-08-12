@@ -55,7 +55,7 @@ Code: 200 -> OK
 
 Code: 401 -> Unauthorized
 
-### Other User Info: `accounts/<int:pk>/` (pk -> user_id)
+### Other User Info: `accounts/user/<int:pk>/` (pk -> user_id)
 #### GET: 
 
 ##### Response:
