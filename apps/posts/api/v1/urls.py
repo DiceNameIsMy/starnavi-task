@@ -9,11 +9,11 @@ from .views import (
 
 urlpatterns = [
     path('', ListCreatePostView.as_view(), 
-        name='create_list_post'
+        name='list_create_post'
     ),
     path('<int:pk>/', RetrieveUpdateDestroyPostView.as_view(), 
         name='retireve_update_destroy_post_view'
     ),
     path('<int:pk>/stats/', PostStatsView.as_view(), name='post_stats_view'),
-    path('<int:pk>/like/', LikePostView.as_view(), name='like_post'),
+    path('<int:pk>/like/', LikePostView.as_view(), name='like_post_view'),
 ]
