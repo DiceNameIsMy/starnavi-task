@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 
 # Saving media locally is not a good practice 
@@ -30,7 +31,7 @@ class Post(models.Model):
         blank=True,
         through='Like'
     )
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
     def count_likes(self):
@@ -46,4 +47,4 @@ class Like(models.Model):
         Post,
         on_delete=models.CASCADE
     )
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(default=timezone.now)
