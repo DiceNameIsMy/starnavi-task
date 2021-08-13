@@ -11,6 +11,15 @@ class PostSerializer(ModelSerializer):
             raise ValidationError("test")
         return attrs
 
+    def to_representation(self, instance):
+        """ Used to add field "is_liked" that shows 
+        did current user liked this post
+        """
+        is_liked = self.context['request'].user in instance.likes.all()
+        ret = super().to_representation(instance)
+        ret['is_liked'] = is_liked
+        return ret
+
     class Meta:
         model = Post
         fields = (
