@@ -10,8 +10,8 @@ from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import PostSerializer
-from .services import get_likes_stats
-from .paginators import DefaultPagePaginator
+from ...services import get_likes_stats
+from ...paginators import DefaultPagePaginator
 from ...permissons import IsAuthor
 from ...models import Post, Like
 from ...filters import DateFilter

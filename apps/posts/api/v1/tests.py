@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.utils.timezone import now, make_aware, timedelta
 
-from apps.posts.api.v1.services import get_likes_stats
+from apps.posts.services import get_likes_stats
 from apps.posts.models import Post, Like
 
 
