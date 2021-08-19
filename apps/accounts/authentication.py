@@ -8,7 +8,7 @@ class CustomJWTAuthentication(JWTAuthentication):
     @staticmethod
     def update_user_last_login(user):
         print(user)
-        user.last_login = timezone.now()
+        user.last_active = timezone.now()
         user.save()
 
     def get_user(self, validated_token):
