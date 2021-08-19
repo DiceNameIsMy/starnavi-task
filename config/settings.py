@@ -70,7 +70,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-if os.environ.get('COTAINER') == 'true':
+if os.environ.get('CONTAINER') == 'true':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
