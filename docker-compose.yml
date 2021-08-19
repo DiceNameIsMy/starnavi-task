@@ -10,13 +10,20 @@ services:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
-
+  makemigrations:
+    build: .
+    command: python code/manage.py makemigrations --noinput
+    env_file: 
+      - .env
+    depends_on: 
+      - db
   migrate:
     build: .
     command: python code/manage.py migrate --noinput
     env_file: 
       - .env
     depends_on: 
+      - makemigrations
       - db
   web:
     build: .
@@ -29,4 +36,5 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - makemigrations
       - migrate
