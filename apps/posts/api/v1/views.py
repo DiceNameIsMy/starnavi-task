@@ -6,11 +6,11 @@ from rest_framework.status import HTTP_201_CREATED ,HTTP_204_NO_CONTENT
 from rest_framework.filters import OrderingFilter
 
 from django.shortcuts import get_object_or_404
+from django.db.models import Count
 
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import PostSerializer
-from ...services import get_likes_stats
 from ...paginators import DefaultPagePaginator
 from ...permissons import IsAuthor, IsAuthorOrReadOnly
 from ...models import Post, Like
@@ -48,10 +48,10 @@ class PostStatsView(GenericAPIView):
         post: Post = get_object_or_404(Post, pk=pk)
         self.check_object_permissions(self.request, post)
 
-        post_likes = Like.objects.filter(post=post)
+        post_likes = Like.objects.filter(post=post).values('date')
         post_likes = self.filter_queryset(post_likes)
 
-        stats = get_likes_stats(post_likes)
+        stats = post_likes.annotate(count=Count('id'))
 
         return Response(stats)
 
