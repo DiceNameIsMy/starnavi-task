@@ -8,7 +8,7 @@ class PostSerializer(ModelSerializer):
 
     def validate(self, attrs):
         if not any([attrs.get('image'), attrs.get('text')]):
-            raise ValidationError("test")
+            raise ValidationError("image or text should be provided")
         return attrs
 
     def to_representation(self, instance):
