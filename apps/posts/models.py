@@ -47,4 +47,5 @@ class Like(models.Model):
         Post,
         on_delete=models.CASCADE
     )
-    date = models.DateTimeField(default=timezone.now)
+    date = models.DateField(default=timezone.now)
+    time = models.TimeField(default=timezone.now)
