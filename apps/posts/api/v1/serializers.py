@@ -7,9 +7,15 @@ from ...models import Post, Like
 class PostSerializer(ModelSerializer):
 
     def validate(self, attrs):
-        if not any([attrs.get('image'), attrs.get('text')]):
-            raise ValidationError("image or text should be provided")
+        if self.context['request'].method == 'POST':
+            if not any([attrs.get('image'), attrs.get('text')]):
+                raise ValidationError("image or text should be provided")
         return attrs
+
+    def create(self, validated_data):
+        if not validated_data.get('author'):
+            validated_data['author'] = self.context['request'].user
+        return super().create(validated_data)
 
     def to_representation(self, instance):
         """ Used to add field "is_liked" that shows 
