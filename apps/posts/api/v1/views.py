@@ -12,7 +12,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import PostSerializer
 from ...services import get_likes_stats
 from ...paginators import DefaultPagePaginator
-from ...permissons import IsAuthor
+from ...permissons import IsAuthor, IsAuthorOrReadOnly
 from ...models import Post, Like
 from ...filters import DateFilter
 
@@ -32,7 +32,7 @@ class ListCreatePostView(ListCreateAPIView):
 
 
 class RetrieveUpdateDestroyPostView(RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAuthenticatedOrReadOnly, )
+    permission_classes = (IsAuthorOrReadOnly, )
 
     queryset = Post.objects.all()
     serializer_class = PostSerializer
