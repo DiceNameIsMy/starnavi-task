@@ -40,12 +40,13 @@ class RetrieveUpdateDestroyPostView(RetrieveUpdateDestroyAPIView):
 
 class PostStatsView(GenericAPIView):
     permission_classes = (IsAuthenticated, IsAuthor)
+    queryset = Post.objects.all()
 
     filter_backends = [DateFilter]
     date_fields = ['date']
 
     def get(self, request, pk):
-        post: Post = get_object_or_404(Post, pk=pk)
+        post = self.get_object()
         self.check_object_permissions(self.request, post)
 
         post_likes = Like.objects.filter(post=post).values('date')
