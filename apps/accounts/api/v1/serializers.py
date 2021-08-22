@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 UserModel = get_user_model()
 
 
-class MyUserDetailSerializer(ModelSerializer):
+class UserDetailsSerializer(ModelSerializer):
     class Meta:
         model = UserModel
         fields = (
@@ -14,8 +14,8 @@ class MyUserDetailSerializer(ModelSerializer):
             'last_login', 'last_active'
         )
 
-
-class UserDetailSerializer(ModelSerializer):
+# Used to access other users profiles
+class UserProfileSerializer(ModelSerializer):
     class Meta:
         model = UserModel
         fields = (

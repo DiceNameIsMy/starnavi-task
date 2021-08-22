@@ -129,7 +129,7 @@ REST_FRAMEWORK = {
     )
 }
 REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'apps.accounts.api.v1.serializers.MyUserDetailSerializer',
+    'USER_DETAILS_SERIALIZER': 'apps.accounts.api.v1.serializers.UserDetailsSerializer',
 }
 
 REST_USE_JWT = True
