@@ -33,6 +33,7 @@ class ListCreatePostView(ListCreateAPIView):
 
 class RetrieveUpdateDestroyPostView(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthorOrReadOnly, )
+    user_permisson_field = 'author'
 
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -40,17 +41,19 @@ class RetrieveUpdateDestroyPostView(RetrieveUpdateDestroyAPIView):
 
 class PostStatsView(GenericAPIView):
     permission_classes = (IsAuthenticated, IsAuthor)
+    user_permisson_field = 'author'
     queryset = Post.objects.all()
 
+    # Filters for like objects
     filter_backends = [DateFilter]
     date_fields = ['date']
 
     def get(self, request, pk):
-        post = self.queryset.get(pk=pk)
+        post = get_object_or_404(self.queryset, pk=pk)
         self.check_object_permissions(self.request, post)
 
-        post_likes = Like.objects.filter(post=post).values('date')
-        post_likes = self.filter_queryset(post_likes)
+        post_likes = Like.objects.filter(post=post)
+        post_likes = self.filter_queryset(post_likes).values('date')
 
         stats = post_likes.annotate(count=Count('id'))
 
