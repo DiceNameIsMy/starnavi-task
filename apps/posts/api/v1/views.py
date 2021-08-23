@@ -46,7 +46,7 @@ class PostStatsView(GenericAPIView):
     date_fields = ['date']
 
     def get(self, request, pk):
-        post = self.get_object()
+        post = self.queryset.get(pk=pk)
         self.check_object_permissions(self.request, post)
 
         post_likes = Like.objects.filter(post=post).values('date')
